@@ -1,0 +1,10 @@
+.appBar {
+  height: var(--appbar-height);
+  width: 100%;
+  background-color: white;
+  box-shadow: 0px 4px 0.4rem 0px var(--shadow-color);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}

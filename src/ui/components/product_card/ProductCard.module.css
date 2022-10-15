@@ -1,0 +1,84 @@
+:root {
+  --img-height: 76%;
+}
+
+.productCard {
+  height: 55rem;
+  width: 1fr;
+  cursor: pointer;
+  border-radius: 1.6rem;
+  box-shadow: 0px 1.2rem 2.4rem 0rem var(--shadow-color), 0px 0px 0.2rem 0px var(--shadow-color);
+  position: relative;
+}
+
+.hoverOverlay {
+  width: 100%;
+  height: 100%;
+  border-radius: 1.6rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: none;
+  background-color: rgb(245, 245, 220, 0.2);
+}
+
+.productCard:hover .hoverOverlay {
+  display: block;
+}
+
+@media only screen and (max-width: 43rem) {
+  .productCard {
+    width: 100%;
+  }
+}
+
+.img {
+  height: var(--img-height);
+  width: 100%;
+  border-radius: 1.6rem 1.6rem 0px 0px;
+}
+
+@media only screen and (max-width: 43rem) {
+  .img {
+    width: 100%;
+    object-fit: cover;
+  }
+}
+
+.details {
+  padding: 2.4rem;
+  height: calc(100% - var(--img-height));
+  border-radius: 0px 0px 1.6rem 1.6rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.name {
+  font-size: 1.4rem;
+  font-weight: 600;
+  line-height: 2.2rem;
+  margin-bottom: auto;
+}
+
+.priceRow {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.price {
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 2.4rem;
+}
