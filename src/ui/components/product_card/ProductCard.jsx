@@ -1,11 +1,14 @@
 import styles from './ProductCard.module.css';
 import AvatarGroup from '@mui/material/AvatarGroup';
 import Avatar from '@mui/material/Avatar';
+import { useNavigate } from 'react-router-dom';
+import * as RouteNames from '../../../navigation/route_names';
 
 export default function ProductCard({ product }) {
+  const navigateTo = useNavigate();
 
   return (
-    <div className={styles.productCard}>
+    <div className={styles.productCard} onClick={() => navigateTo(`${RouteNames.product}/${product.id}`)}>
       <div className={styles.hoverOverlay}></div>
       <img className={styles.img} src={product.img} alt="product for sale on shopping website online" />
       <div className={styles.details}>

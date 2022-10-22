@@ -1,5 +1,6 @@
 import { useRoutes } from "react-router";
 import Home from "../ui/pages/home/Home";
+import Product from "../ui/pages/product_details/Product";
 import * as RouteNames from './route_names';
 
 export default function Router() {
@@ -7,6 +8,10 @@ export default function Router() {
     {
       path: RouteNames.home,
       element: <Home/>,
+    },
+    {
+      path: RouteNames.product + '/:id',
+      element: <Product/>
     }
   ])
 }
