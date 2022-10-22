@@ -1,11 +1,18 @@
 import { useParams } from 'react-router-dom';
 import styles from './Product.module.css';
+import { useState } from 'react';
+
 import { products } from '../../../data/data';
+
 import shoe1 from '../../../assets/products/shoe1.svg';
 import shoe2 from '../../../assets/products/shoe2.svg';
 import shoe3 from '../../../assets/products/shoe3.svg';
 import shoe4 from '../../../assets/products/shoe4.svg';
 import shoe5 from '../../../assets/products/shoe5.svg';
+import original from '../../../assets/product/original.svg';
+import replacement from '../../../assets/product/replacement.svg';
+import warranty from '../../../assets/product/warranty.svg';
+
 import Rating from '../../components/rating/Rating';
 import ColorCheckbox from '../../components/color_check/ColorCheckbox';
 import Select from '@mui/material/Select';
@@ -16,14 +23,19 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import { useState } from 'react';
 import ImgSelector from '../../components/img_selector/ImgSelector';
+import Warranty from '../../components/warranty/Warranty';
 
 export default function Product() {
   const { id } = useParams();
   const currentProduct = products[id];
   const [size, setSize] = useState(10);
   const [quantity, setQuantity] = useState(1);
+  const warrantyItems = [
+    { icon: original, title: '100% Original', desc: 'Chocolate bar candy canes ice cream toffee cookie halvah.' },
+    { icon: replacement, title: '10 Day Replacement', desc: 'Marshmallow biscuit donut dragée fruitcake wafer.' },
+    { icon: warranty, title: '1 Year Warranty', desc: 'Cotton candy gingerbread cake I love sugar sweet.' },
+  ];
 
   function handleChange(event) {
     setSize(event.target.value);
@@ -128,6 +140,13 @@ export default function Product() {
             <Button sx={{...btn, ...buyBtn}} variant='contained'>Buy now</Button>
           </div>
         </div>
+      </div>
+      <div className={styles.warrantyWrapper}>
+      {
+        warrantyItems.map((item, index) => (
+          <Warranty key={index} icon={item.icon} title={item.title} desc={item.desc} />
+        ))
+      }
       </div>
     </div>
   )
