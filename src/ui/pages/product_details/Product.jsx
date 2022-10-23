@@ -25,6 +25,7 @@ import Button from '@mui/material/Button';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import ImgSelector from '../../components/img_selector/ImgSelector';
 import Warranty from '../../components/warranty/Warranty';
+import ProductData from '../../components/product_data/ProductData';
 
 export default function Product() {
   const { id } = useParams();
@@ -148,6 +149,7 @@ export default function Product() {
         ))
       }
       </div>
+      <ProductData />
     </div>
   )
 }

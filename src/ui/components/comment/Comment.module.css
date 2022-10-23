@@ -1,0 +1,183 @@
+.survey {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: left;
+  flex-wrap: nowrap;
+}
+
+@media only screen and (max-width: 43rem) {
+  .survey {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: flex-start;
+  }
+}
+
+.trailingText {
+  margin-left: 0.8rem;
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 2.2rem;
+  text-transform: none;
+  color: var(--text-primary);
+}
+
+.surveyLeading {
+  margin-right: 0.8rem;
+  font-size: 1.4rem;
+  line-height: 2.2rem;
+}
+
+.comment {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: left;
+  flex-wrap: nowrap;
+  width: 100%;
+  margin-bottom: 4rem;
+}
+
+@media only screen and (max-width: 43rem) {
+  .comment {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    width: 100%;
+  }
+}
+
+.leading {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+    -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+  flex-direction: column;
+    -webkit-box-align: center;
+      -ms-flex-align: center;
+  align-items: center;
+  width: 23%;
+}
+
+@media only screen and (max-width: 43rem) {
+  .leading {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    width: 100%;
+    padding: 0;
+    margin-bottom: 1.6rem;
+  }
+}
+
+.avatar {
+  height: 6.4rem;
+  width: 6.4rem;
+  margin-bottom: 1.6rem;
+}
+
+@media only screen and (max-width: 43rem) {
+  .avatar {
+    height: 4rem;
+    width: 4rem;
+    margin-right: 1.6rem;
+    margin-top: 1.6rem;
+    align-self: center;
+  }
+}
+
+@media only screen and (max-width: 43rem) {
+  .userDetails {
+    align-self: center;
+  }
+}
+
+.name {
+  font-size: 1.4rem;
+  font-weight: 600;
+  line-height: 2.2rem;
+  text-align: center;
+}
+
+@media only screen and (max-width: 43rem) {
+  .name {
+    text-align: start;
+  }
+}
+
+.date {
+  font-size: 1.2rem;
+  line-height: 1.8rem;
+  color: #637381;
+  text-align: center;
+}
+
+@media only screen and (max-width: 43rem) {
+  .date {
+    text-align: start;
+  }
+}
+
+.commentDetails {
+  width: 77%;
+  align-self: flex-start;
+  margin-left: 1.6rem;
+}
+
+@media only screen and (max-width: 43rem) {
+  .commentDetails {
+    width: 100%;
+    margin-left: 0;
+  }
+}
+
+.verifiedPurchase {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin-top: 0.9rem;
+  margin-bottom: 0.9rem;
+}
+
+.verifiedImg {
+  width: 1.4rem;
+  height: 1.4rem;
+  margin-right: 0.4rem;
+}
+
+.verifiedText {
+  font-size: 1.2rem;
+  line-height: 1.8rem;
+  color: #00AB55;
+}
+
+.commentText {
+  margin-top: 0.8rem;
+  margin-bottom: 0.8rem;
+  width: 100%;
+}

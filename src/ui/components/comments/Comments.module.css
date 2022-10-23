@@ -1,0 +1,30 @@
+.comments {
+  padding: 2.4rem 4rem 4rem 0px;
+  width: 100%;
+}
+
+@media only screen and (max-width: 43rem) {
+  .comments {
+    padding: 2.4rem;
+  }
+}
+
+.pageSelectorWrap {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: end;
+  -ms-flex-pack: end;
+  justify-content: right;
+}
+
+@media only screen and (max-width: 43rem) {
+  .pageSelectorWrap {
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+  }
+}
