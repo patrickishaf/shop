@@ -1,0 +1,53 @@
+.sideCartItem {
+  padding: 1.6rem 2.4rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: left;
+  position: relative;
+  cursor: pointer;
+}
+
+.img {
+  width: 6.4rem;
+  border-radius: 1.2rem;
+}
+
+.details {
+  margin-left: 1.6rem;
+}
+
+.name {
+  font-size: 1.4rem;
+  font-weight: 600;
+  line-height: 2.2rem;
+  margin-bottom: 0.8rem;
+}
+
+.color, .size, .price {
+  font-size: 1.4rem;
+  font-weight: 400;
+  line-height: 2.2rem;
+  margin-bottom: 0.8rem;
+}
+
+.price .key {
+  margin-right: 100%;
+}
+
+.key {
+  font-size: 1.4rem;
+  color: #637381;
+  margin-right: 0.4rem;
+}
+
+.deleteButton {
+  position: absolute;
+  top: 1rem;
+  right: 2rem;
+}

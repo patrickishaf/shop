@@ -1,0 +1,99 @@
+import { createPortal } from 'react-dom';
+import styles from './FloatingCart.module.css';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import Badge from '@mui/material/Badge';
+import Button from '@mui/material/Button';
+import { useState } from 'react';
+
+import shoe3 from '../../../assets/products/shoe3.svg';
+import shoe6 from '../../../assets/products/shoe6.svg';
+import shoe7 from '../../../assets/products/shoe7.svg';
+
+import SideCartItem from './side_cart_item/SideCartItem';
+
+export default function FloatingCart() {
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const cartItems = [
+    {
+      img: shoe3,
+      name: 'Red Lipstick',
+      color: 'White',
+      size: 9,
+      quantity: 1,
+      available: 2,
+      price: 69.07,
+    },
+    {
+      img: shoe6,
+      name: 'Red Lipstick',
+      color: 'White',
+      size: 9,
+      quantity: 1,
+      available: 2,
+      price: 69.07,
+    },
+    {
+      img: shoe7,
+      name: 'Red Lipstick',
+      color: 'White',
+      size: 9,
+      quantity: 1,
+      available: 2,
+      price: 69.07,
+    },
+  ];
+
+  const cartBtn = {
+    textTransform: 'none', height: '4.8rem', width: '100%', fontSize: '1.5rem',
+    fontWeight: 700, lineHeight: '2.6rem', borderRadius: '0.8rem', color: '#212B36',
+    margin: (window.innerWidth > 430) ? '1.6rem' : 0, mb: '0.4rem', mt: '0.4rem'
+  }
+
+  const checkoutBtn = {
+    bgcolor: '#FFC107',
+  }
+
+  function CollapsedCart() {
+    return (
+      <div className={styles.floatingCartButtton} onClick={()=>setIsExpanded(true)}>
+        <Badge badgeContent={4} color="error" max={9}>
+          <ShoppingCartIcon style={{ height: '2.4rem', width: '2.4rem' }} />
+        </Badge>
+      </div>
+    )
+  }
+
+  function ExpandedCart() {
+    return (
+      <div className={styles.expandedCartWrap}>
+        <div className={styles.closingArea} onClick={()=>setIsExpanded(false)}></div>
+        <div className={styles.expandedCart}>
+          <div className={styles.header}>
+            <p className={styles.title}>Cart</p>
+          </div>
+          {
+            cartItems.map((item, index) => (
+              <SideCartItem key={index} item={item} />
+            ))
+          }
+          <div className={styles.btnWrap}>
+            <Button sx={cartBtn}>
+              <p className={styles.viewCartText}>View Cart</p>
+            </Button>
+          </div>
+          <div className={styles.btnWrap}>
+            <Button variant="contained" sx={{ ...cartBtn, ...checkoutBtn }}>
+              <p className={styles.checkoutText}>Checkout</p>
+            </Button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  return createPortal(
+    isExpanded ? <ExpandedCart/> : <CollapsedCart />,
+    document.getElementById('portal')
+  )
+}
