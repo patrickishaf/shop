@@ -1,4 +1,5 @@
 import styles from './Checkout.module.css';
+import Button from '@mui/material/Button';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
@@ -18,9 +19,22 @@ export default function Checkout() {
 
   const childrenComponents = [
     <Cart />,
-    <Billing />,
-    <Payment />
+    <Billing onClickBack={decActiveStep} onDone={incActiveStep} />,
+    <Payment onClickBack={decActiveStep} />
   ];
+
+  const checkoutBtnStyle = {
+    width: '100%',
+    marginTop: '2.4rem',
+    paddingTop: '1.1rem',
+    paddingBottom: '1.1rem',
+    fontSize: '1.5rem',
+    fontWeight: 700,
+    lineHeight: '2.6rem',
+    textTransform: 'none',
+    backgroundColor: '#6500C9',
+    borderRadius: '0.8rem'
+  }
 
   function incActiveStep() {
     if (activeStep === stepperLabels.length) {
@@ -58,6 +72,9 @@ export default function Checkout() {
         </div>
         <div className={styles.summaryWrap}>
           <OrderSummary/>
+          {
+            activeStep === 0 && <Button variant='contained' style={checkoutBtnStyle} onClick={incActiveStep}>Check Out</Button>
+          }
         </div>
       </div>
     </div>

@@ -5,12 +5,14 @@
 .checkoutWrap {
   padding-left: 4rem;
   padding-right: 4rem;
+  padding-bottom: 30rem;
 }
 
 @media only screen and (max-width: 43rem) {
   .checkoutWrap {
     padding-left: 2rem;
     padding-right: 2rem;
+    padding-bottom: 8rem;
   }
 }
 
@@ -63,6 +65,18 @@
 
 @media only screen and (max-width: 43rem) {
   .childCompWrap {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+.summaryWrap {
+  width: calc(100% - var(--left-comp-width) - 2.4rem);
+  max-width: calc(100% - var(--left-comp-width) - 2.4rem);
+}
+
+@media only screen and (max-width: 43rem) {
+  .summaryWrap {
     width: 100%;
     max-width: 100%;
   }
