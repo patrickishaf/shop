@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styles from './Product.module.css';
 import { useState } from 'react';
 
@@ -12,6 +12,8 @@ import shoe5 from '../../../assets/products/shoe5.svg';
 import original from '../../../assets/product/original.svg';
 import replacement from '../../../assets/product/replacement.svg';
 import warranty from '../../../assets/product/warranty.svg';
+
+import * as RouteNames from '../../../navigation/route_names';
 
 import Rating from '../../components/rating/Rating';
 import ColorCheckbox from '../../components/color_check/ColorCheckbox';
@@ -29,6 +31,7 @@ import ProductData from '../../components/product_data/ProductData';
 
 export default function Product() {
   const { id } = useParams();
+  const navigateTo = useNavigate();
   const currentProduct = products[id];
   const [size, setSize] = useState(10);
   const [quantity, setQuantity] = useState(1);
@@ -138,7 +141,7 @@ export default function Product() {
           <div className={styles.buttonRow}>
             <Button sx={{...btn, ...cartBtn}} variant='contained' startIcon={<AddShoppingCartIcon/>}>Add to cart</Button>
             <div className={styles.buttonSpacer}/>
-            <Button sx={{...btn, ...buyBtn}} variant='contained'>Buy now</Button>
+            <Button onClick={() => navigateTo(RouteNames.checkout)} sx={{...btn, ...buyBtn}} variant='contained'>Buy now</Button>
           </div>
         </div>
       </div>

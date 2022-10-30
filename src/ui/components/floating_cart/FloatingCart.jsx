@@ -1,18 +1,22 @@
-import { createPortal } from 'react-dom';
 import styles from './FloatingCart.module.css';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Badge from '@mui/material/Badge';
 import Button from '@mui/material/Button';
+
 import { useState } from 'react';
+import { createPortal } from 'react-dom';
+import { useNavigate } from 'react-router-dom';
 
 import shoe3 from '../../../assets/products/shoe3.svg';
 import shoe6 from '../../../assets/products/shoe6.svg';
 import shoe7 from '../../../assets/products/shoe7.svg';
 
 import SideCartItem from './side_cart_item/SideCartItem';
+import * as RouteNames from '../../../navigation/route_names';
 
 export default function FloatingCart() {
   const [isExpanded, setIsExpanded] = useState(false);
+  const navigateTo = useNavigate();
 
   const cartItems = [
     {
@@ -43,6 +47,11 @@ export default function FloatingCart() {
       price: 69.07,
     },
   ];
+
+  function onClickViewCart() {
+    setIsExpanded(false);
+    navigateTo(RouteNames.checkout);
+  }
 
   const cartBtn = {
     textTransform: 'none', height: '4.8rem', width: '100%', fontSize: '1.5rem',
@@ -78,7 +87,7 @@ export default function FloatingCart() {
             ))
           }
           <div className={styles.btnWrap}>
-            <Button sx={cartBtn}>
+            <Button onClick={onClickViewCart} sx={cartBtn}>
               <p className={styles.viewCartText}>View Cart</p>
             </Button>
           </div>
