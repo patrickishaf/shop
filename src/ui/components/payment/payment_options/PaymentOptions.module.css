@@ -1,0 +1,95 @@
+.paymentOptions {
+  border-radius: 1.6rem;
+  box-shadow: 0 1.2rem 2.4rem -0.4rem rgba(145, 158, 171, 0.16);
+  padding: 2.4rem;
+}
+
+.header {
+  font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 2.8rem;
+  margin-bottom: 2.4rem;
+}
+
+.paymentMethod {
+  border: solid 1px rgba(145, 158, 171, 0.32);
+  border-radius: 0.8rem;
+  padding: 2.4rem;
+  padding-left: 0.8rem;
+  margin-bottom: 2.4rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  width: 100%;
+  cursor: pointer;
+}
+
+.paymentMethodSelected {
+  border: solid 1px rgba(145, 158, 171, 0.32);
+  border-radius: 0.8rem;
+  padding: 2.4rem;
+  padding-left: 0.8rem;
+  margin-bottom: 2.4rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  width: 100%;
+  cursor: pointer;
+  box-shadow: 0 1.2rem 2.4rem -0.4rem rgba(145, 158, 171, 0.16);
+}
+
+.detailSection {
+  margin-left: 0.8rem;
+  flex-grow: 1;
+}
+
+.type {
+  font-size: 1.4rem;
+  font-weight: 600;
+  line-height: 2.2rem;
+}
+
+.desc {
+  font-size: 1.4rem;
+  line-height: 2.2rem;
+  color: #637381;
+}
+
+.trailing {
+  justify-self: flex-end;
+}
+
+.creditCardSelect {
+  width: 100%;
+}
+
+.creditCardSelectHeader {
+  border-radius: 0.8rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.cardSelectContainer {
+  margin-top: 2.4rem;
+  margin-left: 0.8rem;
+}

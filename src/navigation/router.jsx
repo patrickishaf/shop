@@ -1,5 +1,6 @@
 import { useRoutes } from "react-router";
 import Checkout from "../ui/pages/checkout/Checkout";
+import CheckoutComplete from "../ui/pages/checkout_complete/CheckoutComplete";
 import Home from "../ui/pages/home/Home";
 import Product from "../ui/pages/product_details/Product";
 import * as RouteNames from './route_names';
@@ -17,6 +18,10 @@ export default function Router() {
     {
       path: RouteNames.checkout,
       element: <Checkout/>
+    },
+    {
+      path: RouteNames.checkoutComplete,
+      element: <CheckoutComplete />
     }
   ])
 }

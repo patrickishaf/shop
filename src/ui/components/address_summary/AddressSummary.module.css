@@ -1,0 +1,55 @@
+.addressSummary {
+  width: 100%;
+  border-radius: 1.6rem;
+  box-shadow: 0 1.2rem 2.4rem -0.4rem rgba(145, 158, 171, 0.16);
+  margin-bottom: 2.4rem;
+}
+
+.titleRow {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  padding: 2.4rem;
+  padding-right: 1.6rem;
+}
+
+.title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 2.8rem;
+}
+
+.detailRow {
+  padding: 2.4rem;
+  padding-top: 0;
+}
+
+.name {
+  font-size: 1.4rem;
+  font-weight: 600;
+  line-height: 2.2rem;
+  margin-bottom: 0.8rem;
+}
+
+.addressType {
+  font-weight: 400;
+  line-height: 2.2rem;
+  color: #637381;
+}
+
+.address {
+  font-size: 1.4rem;
+  line-height: 2.2rem;
+  margin-bottom: 0.8rem;
+}
+
+.phone {
+  color: #637381;
+  line-height: 2.2rem;
+}
