@@ -55,7 +55,6 @@ export default function Checkout() {
   }
 
   function completeOrder() {
-    alert('completed order');
     navigateTo(checkoutComplete);
   }
 
