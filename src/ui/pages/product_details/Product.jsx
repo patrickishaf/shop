@@ -2,13 +2,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import styles from './Product.module.css';
 import { useState } from 'react';
 
-import { products } from '../../../data/data';
-
-import shoe1 from '../../../assets/products/shoe1.svg';
-import shoe2 from '../../../assets/products/shoe2.svg';
-import shoe3 from '../../../assets/products/shoe3.svg';
-import shoe4 from '../../../assets/products/shoe4.svg';
-import shoe5 from '../../../assets/products/shoe5.svg';
 import original from '../../../assets/product/original.svg';
 import replacement from '../../../assets/product/replacement.svg';
 import warranty from '../../../assets/product/warranty.svg';
@@ -28,33 +21,29 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import ImgSelector from '../../components/img_selector/ImgSelector';
 import Warranty from '../../components/warranty/Warranty';
 import ProductData from '../../components/product_data/ProductData';
+import { useDispatch, useSelector } from 'react-redux';
+import FetchStates from '../../../utils/fetchstates';
+import { useEffect } from 'react';
+import { fetchProducts } from '../../../features/products/slice';
+import { addToCart, fetchCart } from '../../../features/cart/slice';
+import Notification from '../../../features/app/notification';
+
+const colors = ['#D0F2FF', '#54D62C', '#00AB55', '#FFC107', '#1890FF', '#04297A'];
 
 export default function Product() {
-  const { id } = useParams();
   const navigateTo = useNavigate();
-  const currentProduct = products[id];
+  const { id: index } = useParams();
   const [size, setSize] = useState(10);
   const [quantity, setQuantity] = useState(1);
+
+  const { status, products } = useSelector(state => state.products);
+  const dispatch = useDispatch();
+
   const warrantyItems = [
     { icon: original, title: '100% Original', desc: 'Chocolate bar candy canes ice cream toffee cookie halvah.' },
     { icon: replacement, title: '10 Day Replacement', desc: 'Marshmallow biscuit donut dragée fruitcake wafer.' },
     { icon: warranty, title: '1 Year Warranty', desc: 'Cotton candy gingerbread cake I love sugar sweet.' },
   ];
-
-  function handleChange(event) {
-    setSize(event.target.value);
-  }
-
-  function decrementQty() {
-    if (quantity === 1) {
-      return;
-    }
-    setQuantity(quantity-1);
-  }
-
-  function incrementQty() {
-    setQuantity(quantity+1);
-  }
 
   const btn = {
     textTransform: 'none', height: '4.8rem', width: '100%', fontSize: '1.5rem',
@@ -75,29 +64,72 @@ export default function Product() {
     }
   }
 
+  function handleChange(event) {
+    setSize(event.target.value);
+  }
+
+  function decrementQty() {
+    if (quantity === 1) {
+      return;
+    }
+    setQuantity(quantity-1);
+  }
+
+  function incrementQty() {
+    setQuantity(quantity+1);
+  }
+
+  function addThisProductToCart() {
+    console.log('product to be added =>', {
+      productID: products[index].id,
+      quantity,
+    });
+    dispatch(addToCart({
+      productID: products[index].id,
+      quantity,
+    }));
+    dispatch(fetchCart());
+  }
+
+  function buyThisProductNow() {
+    addThisProductToCart();
+    navigateTo(RouteNames.checkout)
+  }
+
+  useEffect(() => {
+    if (status !== FetchStates.complete) {
+      dispatch(fetchProducts());
+    }
+  }, [status]);
+
+  useEffect(() => {
+    const notif = new Notification('success', 'you did it successfully', 2000);
+    console.log('notif =>', notif);
+  }, []);
+
   return (
-    <div className={styles.product}>
+    (status === FetchStates.complete &&  products) && <div className={styles.product}>
       <div className={styles.summaryWrapper}>
         <div className={styles.imgSelector}>
-          <ImgSelector images={[shoe1, shoe2, shoe3, shoe4, shoe5]}/>
+          <ImgSelector images={products[index].assets.map(asset => asset.url)}/>
         </div>
         <div className={styles.summary}>
-          <p className={styles.sale}>{currentProduct.sale}</p>
-          <p className={styles.arrival}>{currentProduct.arrival}</p>
-          <p className={styles.fullName}>{currentProduct.fullName}</p>
-          <Rating ratingCount={currentProduct.stars} reviewCount={currentProduct.reviewCount}/>
+          <p className={styles.sale}>{products[index].is.sold_out ? 'out of stock' : 'sale'}</p>
+          <p className={styles.arrival}>new arrival</p>
+          <p className={styles.fullName}>{products[index].name}</p>
+          <Rating ratingCount={products[index].extra_fields.stars ?? 4} reviewCount={products[index].extra_fields.reviews ? products[index].extra_fields.reviews.length : '11.7k'}/>
           <p className={styles.price}>
             <span className={styles.canceled}>
-              <s>{'$' + currentProduct.normalPrice}</s>
+              <s>{products[index].price.formatted_with_symbol}</s>
             </span>
-            {'$' + currentProduct.discountPrice}
+            {products[index].discountPrice}
           </p>
           <hr className={styles.divider} />
           <div className={styles.picker}>
             <p className={styles.text}>Color</p>
             <div className={styles.colorCheckboxes}>
             {
-              currentProduct.colors.map((color, index) => (
+              colors.map((color, index) => (
                 <div key={index}>
                   <ColorCheckbox color={color} />
                 </div>
@@ -105,7 +137,7 @@ export default function Product() {
             }
             </div>
           </div>
-          <div className={styles.picker}>
+          { products[index].categories.includes('clothing') && (<div className={styles.picker}>
             <p className={styles.text}>Size</p>
             <FormControl sx={{ m: 1, minWidth: '190px' }} size="small">
               <Select
@@ -120,10 +152,10 @@ export default function Product() {
                 <MenuItem key={3} value={30}>Thirty</MenuItem>
               </Select>
             </FormControl>
-          </div>
-          <div className={styles.sizeChartLinkWrap}>
+          </div>)}
+          {products[index].categories.includes('clothing') && (<div className={styles.sizeChartLinkWrap}>
             <p className={styles.sizeChartLink}>Size chart</p>
-          </div>
+          </div>)}
           <div className={styles.picker}>
             <p className={styles.text}>Quantity</p>
             <div className={styles.quantitySelect}>
@@ -135,13 +167,13 @@ export default function Product() {
             </div>
           </div>
           <div className={styles.sizeChartLinkWrap}>
-            <p className={styles.available}>{'Available: ' + currentProduct.quantity}</p>
+            <p className={styles.available}>{'Available: ' + products[index].inventory.available}</p>
           </div>
           <hr className={styles.divider} />
           <div className={styles.buttonRow}>
-            <Button sx={{...btn, ...cartBtn}} variant='contained' startIcon={<AddShoppingCartIcon/>}>Add to cart</Button>
+            <Button onClick={() => addThisProductToCart()} sx={{...btn, ...cartBtn}} variant='contained' startIcon={<AddShoppingCartIcon/>}>Add to cart</Button>
             <div className={styles.buttonSpacer}/>
-            <Button onClick={() => navigateTo(RouteNames.checkout)} sx={{...btn, ...buyBtn}} variant='contained'>Buy now</Button>
+            <Button onClick={() => buyThisProductNow()} sx={{...btn, ...buyBtn}} variant='contained'>Buy now</Button>
           </div>
         </div>
       </div>

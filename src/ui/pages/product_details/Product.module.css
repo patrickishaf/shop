@@ -29,23 +29,27 @@
 }
 
 .imgSelector {
-  flex-grow: 6;
+  width: 60%;
 }
 
 @media only screen and (max-width: 43rem) {
   .imgSelector {
     height: max-content;
+    width: 100%;
+    flex-grow: 6;
   }
 }
 
 .summary {
-  flex-grow: 4;
+  width: 40%;
   padding: 4rem 6.4rem;
 }
 
 @media only screen and (max-width: 43rem) {
   .summary {
     padding: 2.4rem;
+    width: 100%;
+    flex-grow: 4;
   }
 }
 

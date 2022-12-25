@@ -3,7 +3,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Badge from '@mui/material/Badge';
 import Button from '@mui/material/Button';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
 
@@ -13,10 +13,12 @@ import shoe7 from '../../../assets/products/shoe7.svg';
 
 import SideCartItem from './side_cart_item/SideCartItem';
 import * as RouteNames from '../../../navigation/route_names';
+import { useSelector } from 'react-redux';
 
 export default function FloatingCart() {
   const [isExpanded, setIsExpanded] = useState(false);
   const navigateTo = useNavigate();
+  const { cart } = useSelector(state => state.cart);
 
   const cartItems = [
     {
@@ -63,10 +65,14 @@ export default function FloatingCart() {
     bgcolor: '#FFC107',
   }
 
+  useEffect(() => {
+    console.log(cart);
+  }, [cart]);
+
   function CollapsedCart() {
-    return (
+    return cart && (
       <div className={styles.floatingCartButtton} onClick={()=>setIsExpanded(true)}>
-        <Badge badgeContent={4} color="error" max={9}>
+        <Badge badgeContent={cart.total_items} color="error" max={9}>
           <ShoppingCartIcon style={{ height: '2.4rem', width: '2.4rem' }} />
         </Badge>
       </div>
@@ -74,16 +80,16 @@ export default function FloatingCart() {
   }
 
   function ExpandedCart() {
-    return (
+    return cart && (
       <div className={styles.expandedCartWrap}>
-        <div className={styles.closingArea} onClick={()=>setIsExpanded(false)}></div>
+        <div className={styles.closingArea} onClick={()=>setIsExpanded(false)} />
         <div className={styles.expandedCart}>
           <div className={styles.header}>
             <p className={styles.title}>Cart</p>
           </div>
           {
-            cartItems.map((item, index) => (
-              <SideCartItem key={index} item={item} />
+            cart.line_items.map((item, index) => (
+              <SideCartItem key={item.id} item={item} index={index} />
             ))
           }
           <div className={styles.btnWrap}>

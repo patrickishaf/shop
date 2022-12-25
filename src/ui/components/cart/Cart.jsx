@@ -6,8 +6,11 @@ import CartItem from './cart_item/CartItem';
 import data from './data';
 
 import { home } from '../../../navigation/route_names';
+import { useSelector } from 'react-redux';
 
 export default function Cart() {
+  const { cart } = useSelector(state => state.cart);
+
   const navigateTo = useNavigate();
   const backButton = {
     color: '#212B36',
@@ -17,7 +20,7 @@ export default function Cart() {
     marginTop: '2.4rem'
   }
 
-  return (
+  return (cart && cart.line_items) && (
     <div>
       <div className={styles.cartWrap}>
         <p className={styles.header}>Cart</p>
@@ -28,8 +31,8 @@ export default function Cart() {
           <p className={styles.totalPrice}>Total Price</p>
         </div>
         {
-          data.map((item, index) => (
-            <CartItem key={index} item={item} />
+          cart.line_items.map((item, index) => (
+            <CartItem key={item.id} index={index} />
           ))
         }
       </div>

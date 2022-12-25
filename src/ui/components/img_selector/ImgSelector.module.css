@@ -72,6 +72,9 @@
   .imgBtns {
     overflow-x: scroll;
   }
+  .imgBtns::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 @media only screen and (max-width: 43rem) {
