@@ -69,6 +69,7 @@
   background-color: white;
   box-shadow: 0px 1.2rem 2.4rem 0 rgba(145, 158, 171, 0.12), 0px 0px 0.2rem, 0px rgba(145, 158, 171, 0.2);
   animation: expand 0.5s forwards;
+  transition: width 0.2s;
 }
 
 @media only screen and (max-width: 43rem) {
@@ -76,6 +77,10 @@
     width: var(--side-cart-width-mobile);
     animation: expand-mobile 0.5s forwards;
   }
+}
+
+.closed {
+  width: 0;
 }
 
 .header {

@@ -6,6 +6,6 @@ export default class ProductsController {
   }
 
   static async addReview(id) {
-    console.log('...coming soon...');
+    // TODO: implement addReview
   }
 }

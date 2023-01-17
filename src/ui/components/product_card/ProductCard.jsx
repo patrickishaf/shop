@@ -3,7 +3,8 @@ import AvatarGroup from '@mui/material/AvatarGroup';
 import Avatar from '@mui/material/Avatar';
 import { useNavigate } from 'react-router-dom';
 import * as RouteNames from '../../../navigation/route_names';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSelectedProductWithIndex } from '../../../features/products/slice';
 
 
 const colors = ['#D0F2FF', '#54D62C'];
@@ -11,9 +12,15 @@ const colors = ['#D0F2FF', '#54D62C'];
 export default function ProductCard({ index }) {
   const navigateTo = useNavigate();
   const { products } = useSelector(state => state.products);
+  const dispatch = useDispatch();
+
+  function onClickProduct() {
+    dispatch(setSelectedProductWithIndex(index));
+    navigateTo(`${RouteNames.product}/${index}`);
+  }
 
   return (
-    <div className={styles.productCard} onClick={() => navigateTo(`${RouteNames.product}/${index}`)}>
+    <div className={styles.productCard} onClick={onClickProduct}>
       <div className={styles.hoverOverlay}></div>
       <img className={styles.img} src={products[index].image.url} alt="product for sale on shopping website online" />
       <div className={styles.details}>

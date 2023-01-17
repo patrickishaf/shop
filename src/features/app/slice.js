@@ -15,6 +15,12 @@ const appSlice = createSlice({
       const { notification } = action.payload;
       state.notification = notification;
       state.notifyUser = true;
+    },
+    showToast: () => {
+      // TODO: Implement showDialog
+    },
+    showBanner: () => {
+      // TODO: Implement showBanner
     }
   }
 });

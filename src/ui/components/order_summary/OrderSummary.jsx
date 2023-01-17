@@ -1,21 +1,33 @@
 import Button from '@mui/material/Button';
 import { useState } from 'react';
 import styles from './OrderSummary.module.css';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
+import FetchStates from '../../../utils/fetchstates';
+import { fetchCart } from '../../../features/cart/slice';
 
 export default function OrderSummary() {
   const [voucher, setVoucher] = useState('');
-  const { cart } = useSelector(state => state.cart);
+  const { cart, status } = useSelector(state => state.cart);
   const [total, setTotal] = useState(0);
+  const dispatch = useDispatch();
   
   function redeemVoucher(e) {
     e.preventDefault();
   }
 
   useEffect(() => {
-    console.log('cart =>', cart);
-    setTotal(cart.subtotal.formatted_with_symbol)
+    if (status !== FetchStates.complete) {
+      console.log('fetching cart');
+      dispatch(fetchCart());
+    }
+  }, [status]);
+
+  useEffect(() => {
+    if (cart) {
+      console.log('the cart is =>', cart);
+      setTotal(cart.subtotal.formatted_with_symbol);
+    }
   }, [cart]);
 
   return cart && (

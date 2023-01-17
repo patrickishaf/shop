@@ -3,7 +3,6 @@ import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
 import styles from './Cart.module.css';
 import CartItem from './cart_item/CartItem';
-import data from './data';
 
 import { home } from '../../../navigation/route_names';
 import { useSelector } from 'react-redux';

@@ -3,13 +3,9 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Badge from '@mui/material/Badge';
 import Button from '@mui/material/Button';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
-
-import shoe3 from '../../../assets/products/shoe3.svg';
-import shoe6 from '../../../assets/products/shoe6.svg';
-import shoe7 from '../../../assets/products/shoe7.svg';
 
 import SideCartItem from './side_cart_item/SideCartItem';
 import * as RouteNames from '../../../navigation/route_names';
@@ -20,37 +16,7 @@ export default function FloatingCart() {
   const navigateTo = useNavigate();
   const { cart } = useSelector(state => state.cart);
 
-  const cartItems = [
-    {
-      img: shoe3,
-      name: 'Red Lipstick',
-      color: 'White',
-      size: 9,
-      quantity: 1,
-      available: 2,
-      price: 69.07,
-    },
-    {
-      img: shoe6,
-      name: 'Red Lipstick',
-      color: 'White',
-      size: 9,
-      quantity: 1,
-      available: 2,
-      price: 69.07,
-    },
-    {
-      img: shoe7,
-      name: 'Red Lipstick',
-      color: 'White',
-      size: 9,
-      quantity: 1,
-      available: 2,
-      price: 69.07,
-    },
-  ];
-
-  function onClickViewCart() {
+  function openCheckoutPage() {
     setIsExpanded(false);
     navigateTo(RouteNames.checkout);
   }
@@ -64,10 +30,6 @@ export default function FloatingCart() {
   const checkoutBtn = {
     bgcolor: '#FFC107',
   }
-
-  useEffect(() => {
-    console.log(cart);
-  }, [cart]);
 
   function CollapsedCart() {
     return cart && (
@@ -93,12 +55,7 @@ export default function FloatingCart() {
             ))
           }
           <div className={styles.btnWrap}>
-            <Button onClick={onClickViewCart} sx={cartBtn}>
-              <p className={styles.viewCartText}>View Cart</p>
-            </Button>
-          </div>
-          <div className={styles.btnWrap}>
-            <Button variant="contained" sx={{ ...cartBtn, ...checkoutBtn }}>
+            <Button onClick={openCheckoutPage} variant="contained" sx={{ ...cartBtn, ...checkoutBtn }}>
               <p className={styles.checkoutText}>Checkout</p>
             </Button>
           </div>

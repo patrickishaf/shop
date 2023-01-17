@@ -4,8 +4,9 @@ import FetchStates from "../../utils/fetchstates";
 
 const initialState = {
   status: FetchStates.default,
-  products: undefined,
-  error: undefined,
+  products: null,
+  selectedProduct: null,
+  error: null,
 }
 
 export const fetchProducts = createAsyncThunk('products/get', async (_, { rejectWithValue }) => {
@@ -19,6 +20,14 @@ export const fetchProducts = createAsyncThunk('products/get', async (_, { reject
 const productsSlice = createSlice({
   name: 'products',
   initialState,
+  reducers: {
+    setSelectedProductWithIndex: (state, action) => {
+      state.selectedProduct = {
+        index: action.payload,
+        product: state.products[action.payload],
+      }
+    }
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchProducts.pending, (state) => {
       state.status = FetchStates.loading;
@@ -34,4 +43,5 @@ const productsSlice = createSlice({
   },
 });
 
+export const { setSelectedProductWithIndex } = productsSlice.actions;
 export default productsSlice.reducer;

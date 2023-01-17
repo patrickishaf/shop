@@ -6,9 +6,7 @@ export const readCart = async () => {
 }
 
 export const postToCart = async (productID, quantity) => {
-  console.log('running postToCart in api. details =>', { productID, quantity });
   const response = await commerce.cart.add(productID, quantity);
-  console.log('the cart after adding is', response.cart);
   return response.cart;
 }
 

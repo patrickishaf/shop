@@ -29,6 +29,7 @@ export default function CartItem({ index }) {
   }, [products]);
 
   useEffect(() => {
+    // console.log(cart.line_items[index]);
     setCurrentCartItem(cart.line_items[index]);
   }, [cart]);
 

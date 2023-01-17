@@ -13,32 +13,32 @@ import AddressSummary from '../../components/address_summary/AddressSummary';
 import { useNavigate } from 'react-router-dom';
 import { checkoutComplete } from '../../../navigation/route_names';
 
+const checkoutBtnStyle = {
+  width: '100%',
+  marginTop: '2.4rem',
+  paddingTop: '1.1rem',
+  paddingBottom: '1.1rem',
+  fontSize: '1.5rem',
+  fontWeight: 700,
+  lineHeight: '2.6rem',
+  textTransform: 'none',
+  backgroundColor: '#6500C9',
+  borderRadius: '0.8rem'
+}
+
+const stepperLabels = [
+  'Cart', 'Billing & address', 'Payment'
+];
+
 export default function Checkout() {
   const [activeStep, setActiveStep] = useState(0);
   const navigateTo = useNavigate();
-
-  const stepperLabels = [
-    'Cart', 'Billing & address', 'Payment'
-  ];
 
   const childrenComponents = [
     <Cart />,
     <Billing onClickBack={decActiveStep} onDone={incActiveStep} />,
     <Payment onClickBack={decActiveStep} />
   ];
-
-  const checkoutBtnStyle = {
-    width: '100%',
-    marginTop: '2.4rem',
-    paddingTop: '1.1rem',
-    paddingBottom: '1.1rem',
-    fontSize: '1.5rem',
-    fontWeight: 700,
-    lineHeight: '2.6rem',
-    textTransform: 'none',
-    backgroundColor: '#6500C9',
-    borderRadius: '0.8rem'
-  }
 
   function incActiveStep() {
     if (activeStep === stepperLabels.length) {

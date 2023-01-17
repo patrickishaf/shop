@@ -6,7 +6,6 @@ export default class CartController {
   }
 
   static async addToCart(productID, quantity=1) {
-    console.log('running addToCart method in controller. details =>', { productID, quantity });
     return await postToCart(productID, quantity);
   }
 }

@@ -19,7 +19,6 @@ export const fetchCart = createAsyncThunk('cart/get', async (_, { rejectWithValu
 
 export const addToCart = createAsyncThunk('cart/add', async ({ productID, quantity }, { rejectWithValue }) => {
   try {
-    console.log('running add to cart in slice. details =>', { productID, quantity });
     return await CartController.addToCart(productID, quantity);
   } catch (e) {
     return rejectWithValue(e.toString());
@@ -40,7 +39,6 @@ const cartSlice = createSlice({
       state.status = FetchStates.complete;
     });
     builder.addCase(fetchCart.rejected, (state, action) => {
-      console.log('ran into an error =>', action.payload);
       state.error = action.payload;
       state.status = FetchStates.error;
     });
@@ -51,13 +49,11 @@ const cartSlice = createSlice({
       state.error = undefined;
     });
     builder.addCase(addToCart.fulfilled, (state, action) => {
-      console.log('new value of cart in fulfilled case =>', action.payload);
       state.cart = action.payload;
       state.status = FetchStates.complete;
       state.refreshed = true;
     });
     builder.addCase(addToCart.rejected, (state, action) => {
-      console.log('ran into an error =>', action.payload);
       state.error = action.payload;
       state.status = FetchStates.error;
     });

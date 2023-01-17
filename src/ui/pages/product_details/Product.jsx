@@ -24,11 +24,36 @@ import ProductData from '../../components/product_data/ProductData';
 import { useDispatch, useSelector } from 'react-redux';
 import FetchStates from '../../../utils/fetchstates';
 import { useEffect } from 'react';
-import { fetchProducts } from '../../../features/products/slice';
+import { fetchProducts, setSelectedProductWithIndex } from '../../../features/products/slice';
 import { addToCart, fetchCart } from '../../../features/cart/slice';
 import Notification from '../../../features/app/notification';
 
 const colors = ['#D0F2FF', '#54D62C', '#00AB55', '#FFC107', '#1890FF', '#04297A'];
+
+const btnStyle = {
+  textTransform: 'none', height: '4.8rem', width: '100%', fontSize: '1.5rem',
+  fontWeight: 700, lineHeight: '2.6rem', borderRadius: '0.8rem'
+}
+
+const cartBtnStyle = {
+  bgcolor: '#FFC107', color: '#212B36',
+  '&:hover': {
+    bgcolor: 'white'
+  }
+}
+
+const buyBtnStyle = {
+  bgcolor: '#00AB55',
+  '&:hover': {
+    bgcolor: 'grey'
+  }
+}
+
+const warrantyItems = [
+  { icon: original, title: '100% Original', desc: 'Chocolate bar candy canes ice cream toffee cookie halvah.' },
+  { icon: replacement, title: '10 Day Replacement', desc: 'Marshmallow biscuit donut dragée fruitcake wafer.' },
+  { icon: warranty, title: '1 Year Warranty', desc: 'Cotton candy gingerbread cake I love sugar sweet.' },
+];
 
 export default function Product() {
   const navigateTo = useNavigate();
@@ -36,33 +61,8 @@ export default function Product() {
   const [size, setSize] = useState(10);
   const [quantity, setQuantity] = useState(1);
 
-  const { status, products } = useSelector(state => state.products);
+  const { status, products, selectedProduct } = useSelector(state => state.products);
   const dispatch = useDispatch();
-
-  const warrantyItems = [
-    { icon: original, title: '100% Original', desc: 'Chocolate bar candy canes ice cream toffee cookie halvah.' },
-    { icon: replacement, title: '10 Day Replacement', desc: 'Marshmallow biscuit donut dragée fruitcake wafer.' },
-    { icon: warranty, title: '1 Year Warranty', desc: 'Cotton candy gingerbread cake I love sugar sweet.' },
-  ];
-
-  const btn = {
-    textTransform: 'none', height: '4.8rem', width: '100%', fontSize: '1.5rem',
-    fontWeight: 700, lineHeight: '2.6rem', borderRadius: '0.8rem'
-  }
-
-  const cartBtn = {
-    bgcolor: '#FFC107', color: '#212B36',
-    '&:hover': {
-      bgcolor: 'white'
-    }
-  }
-
-  const buyBtn = {
-    bgcolor: '#00AB55',
-    '&:hover': {
-      bgcolor: 'grey'
-    }
-  }
 
   function handleChange(event) {
     setSize(event.target.value);
@@ -80,10 +80,6 @@ export default function Product() {
   }
 
   function addThisProductToCart() {
-    console.log('product to be added =>', {
-      productID: products[index].id,
-      quantity,
-    });
     dispatch(addToCart({
       productID: products[index].id,
       quantity,
@@ -103,9 +99,15 @@ export default function Product() {
   }, [status]);
 
   useEffect(() => {
-    const notif = new Notification('success', 'you did it successfully', 2000);
-    console.log('notif =>', notif);
-  }, []);
+    if (status === FetchStates.complete && products && index && !selectedProduct) {
+      dispatch(setSelectedProductWithIndex(index))
+    }
+  }, [status, index]);
+
+  // useEffect(() => {
+  //   const notif = new Notification('success', 'you did it successfully', 2000);
+  //   console.log('notif =>', notif);
+  // }, []);
 
   return (
     (status === FetchStates.complete &&  products) && <div className={styles.product}>
@@ -171,9 +173,9 @@ export default function Product() {
           </div>
           <hr className={styles.divider} />
           <div className={styles.buttonRow}>
-            <Button onClick={() => addThisProductToCart()} sx={{...btn, ...cartBtn}} variant='contained' startIcon={<AddShoppingCartIcon/>}>Add to cart</Button>
+            <Button onClick={() => addThisProductToCart()} sx={{...btnStyle, ...cartBtnStyle}} variant='contained' startIcon={<AddShoppingCartIcon/>}>Add to cart</Button>
             <div className={styles.buttonSpacer}/>
-            <Button onClick={() => buyThisProductNow()} sx={{...btn, ...buyBtn}} variant='contained'>Buy now</Button>
+            <Button onClick={() => buyThisProductNow()} sx={{...btnStyle, ...buyBtnStyle}} variant='contained'>Buy now</Button>
           </div>
         </div>
       </div>
