@@ -32,7 +32,7 @@ export default function FloatingCart() {
   }
 
   function CollapsedCart() {
-    return cart && (
+    return cart && cart.total_items > 0 && (
       <div className={styles.floatingCartButtton} onClick={()=>setIsExpanded(true)}>
         <Badge badgeContent={cart.total_items} color="error" max={9}>
           <ShoppingCartIcon style={{ height: '2.4rem', width: '2.4rem' }} />
