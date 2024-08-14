@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import SideCartItem from './side_cart_item/SideCartItem';
 import * as RouteNames from '../../../navigation/route_names';
@@ -14,7 +14,9 @@ import { useSelector } from 'react-redux';
 export default function FloatingCart() {
   const [isExpanded, setIsExpanded] = useState(false);
   const navigateTo = useNavigate();
+  const location = useLocation();
   const { cart } = useSelector(state => state.cart);
+  const unsupportedLocations = [ '/checkout' ];
 
   function openCheckoutPage() {
     setIsExpanded(false);
@@ -64,7 +66,7 @@ export default function FloatingCart() {
     )
   }
 
-  return createPortal(
+  return !unsupportedLocations.includes(location.pathname) && createPortal(
     isExpanded ? <ExpandedCart/> : <CollapsedCart />,
     document.getElementById('portal')
   )

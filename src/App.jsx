@@ -4,14 +4,14 @@ import { useDispatch } from "react-redux";
 import Router from "./navigation/router";
 import FloatingCart from "./ui/components/floating_cart/FloatingCart";
 import { fetchProducts } from "./features/products/slice";
-import { fetchCart } from "./features/cart/slice";
+import { fetchCartFromServer } from "./store/CartSlice";
 
 export default function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchProducts());
-    dispatch(fetchCart());
+    dispatch(fetchCartFromServer());
   }, []);
 
   return (

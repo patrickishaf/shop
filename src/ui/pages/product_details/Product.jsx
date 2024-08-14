@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useNavigate, useParams } from 'react-router-dom';
 import styles from './Product.module.css';
 import { useState } from 'react';
@@ -25,8 +26,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import FetchStates from '../../../utils/fetchstates';
 import { useEffect } from 'react';
 import { fetchProducts, setSelectedProductWithIndex } from '../../../features/products/slice';
-import { addToCart, fetchCart } from '../../../features/cart/slice';
-import Notification from '../../../features/app/notification';
+import { addToCart } from '../../../store/CartSlice';
+// import Notification from '../../../features/app/notification';
 
 const colors = ['#D0F2FF', '#54D62C', '#00AB55', '#FFC107', '#1890FF', '#04297A'];
 
@@ -56,39 +57,51 @@ const warrantyItems = [
 ];
 
 export default function Product() {
-  const navigateTo = useNavigate();
-  const { id: index } = useParams();
-  const [size, setSize] = useState(10);
-  const [quantity, setQuantity] = useState(1);
+  const navigateTo = useNavigate()
+  const { id: index } = useParams()
+  const [size, setSize] = useState(10)
+  const [quantity, setQuantity] = useState(0)
 
-  const { status, products, selectedProduct } = useSelector(state => state.products);
-  const dispatch = useDispatch();
+  const { status, products, selectedProduct } = useSelector(state => state.products)
+  const { cartItems } = useSelector(state => state.cart)
+  const dispatch = useDispatch()
 
   function handleChange(event) {
-    setSize(event.target.value);
+    setSize(event.target.value)
   }
 
   function decrementQty() {
     if (quantity === 1) {
       return;
     }
-    setQuantity(quantity-1);
+    setQuantity(quantity-1)
   }
 
   function incrementQty() {
-    setQuantity(quantity+1);
+    setQuantity(quantity+1)
   }
 
   function addThisProductToCart() {
-    dispatch(addToCart({
-      productID: products[index].id,
-      quantity,
-    }));
-    dispatch(fetchCart());
+    if (quantity === 0) {
+      dispatch(addToCart({
+        productID: products[index].id,
+        quantity: 1,
+      }))
+    } else {
+      dispatch(addToCart({
+        productID: products[index].id,
+        quantity,
+      }))
+    }
   }
 
   function buyThisProductNow() {
-    addThisProductToCart();
+    if (quantity === 0) {
+      dispatch(addToCart({
+        productID: products[index].id,
+        quantity: 1,
+      }));
+    }
     navigateTo(RouteNames.checkout)
   }
 
@@ -96,18 +109,15 @@ export default function Product() {
     if (status !== FetchStates.complete) {
       dispatch(fetchProducts());
     }
-  }, [status]);
+  }, [status])
 
   useEffect(() => {
     if (status === FetchStates.complete && products && index && !selectedProduct) {
       dispatch(setSelectedProductWithIndex(index))
     }
-  }, [status, index]);
+  }, [status, index])
 
-  // useEffect(() => {
-  //   const notif = new Notification('success', 'you did it successfully', 2000);
-  //   console.log('notif =>', notif);
-  // }, []);
+  useEffect(() => {}, [])
 
   return (
     (status === FetchStates.complete &&  products) && <div className={styles.product}>

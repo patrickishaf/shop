@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import * as RouteNames from '../../../navigation/route_names';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedProductWithIndex } from '../../../features/products/slice';
+import uuid from 'react-uuid';
 
 
 const colors = ['#D0F2FF', '#54D62C'];
@@ -29,8 +30,8 @@ export default function ProductCard({ index }) {
           <div>
             <AvatarGroup>
             {
-              colors.map((color, index) => (
-                <Avatar key={index} sx={{ bgcolor: color, height: '1.6rem', width: '1.6rem' }}>
+              colors.map((color) => (
+                <Avatar key={uuid()} sx={{ bgcolor: color, height: '1.6rem', width: '1.6rem' }}>
                   <div></div>
                 </Avatar>
               ))

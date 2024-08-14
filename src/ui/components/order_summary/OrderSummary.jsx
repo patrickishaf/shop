@@ -1,10 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import Button from '@mui/material/Button';
 import { useState } from 'react';
 import styles from './OrderSummary.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import FetchStates from '../../../utils/fetchstates';
-import { fetchCart } from '../../../features/cart/slice';
+import { fetchCartFromServer } from '../../../store/CartSlice';
 
 export default function OrderSummary() {
   const [voucher, setVoucher] = useState('');
@@ -18,14 +19,12 @@ export default function OrderSummary() {
 
   useEffect(() => {
     if (status !== FetchStates.complete) {
-      console.log('fetching cart');
-      dispatch(fetchCart());
+      dispatch(fetchCartFromServer());
     }
   }, [status]);
 
   useEffect(() => {
-    if (cart) {
-      console.log('the cart is =>', cart);
+    if (cart && cart.subtotal) {
       setTotal(cart.subtotal.formatted_with_symbol);
     }
   }, [cart]);
@@ -35,7 +34,7 @@ export default function OrderSummary() {
       <p className={styles.header}>Order Summary</p>
       <div className={styles.dataRow}>
         <p className={styles.prop}>Sub Total</p>
-        <p className={styles.value}>{cart.subtotal.formatted_with_symbol}</p>
+        <p className={styles.value}>{cart && cart.subtotal && cart.subtotal.formatted_with_symbol}</p>
       </div>
       <div className={styles.dataRow}>
         <p className={styles.prop}>Discount</p>

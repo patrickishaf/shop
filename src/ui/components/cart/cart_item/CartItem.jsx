@@ -1,25 +1,56 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import styles from './CartItem.module.css';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import IconButton from '@mui/material/IconButton';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { changeProductQuantity } from '../../../../store/CartSlice';
+
+class CallbackQueue {
+  currentTimeoutID;
+  callback;
+
+  addCallback(callback) {
+    this.callback = callback;
+    this.startExecution();
+  }
+
+  startExecution() {
+    if (this.currentTimeoutID) {
+      clearTimeout(this.currentTimeoutID);
+    }
+    this.currentTimeoutID = setTimeout(() => {
+      this.callback();
+      this.currentTimeoutID = null;
+    }, 10000);
+  }
+}
 
 export default function CartItem({ index }) {
   const { cart } = useSelector(state => state.cart);
   const { products } = useSelector(state => state.products);
-  const [quantity, setQuantity] = useState();
+  const [quantity, setQuantity] = useState(0);
   const [numberOfUnitsAvailable, setNumberOfUnitsAvailable] = useState(0);
   const [currentCartItem, setCurrentCartItem] = useState();
+  const dispatch = useDispatch();
+  const callbackQueue = new CallbackQueue();
 
   function decrementQty() {
+    // TODO: Show a toast that ask the user if they want to remove the item from the cart
     if (quantity === 1) return;
     setQuantity(quantity - 1)
   }
 
   function incrementQty() {
-    setQuantity(quantity + 1)
+    // TODO: Show a toast that notifies a user that they can not exceed the max number of units available
+    if (quantity === numberOfUnitsAvailable) return;
+    setQuantity((prev) => prev + 1);
+  }
+
+  function dispatchQttyChange(itemID, newQuantity) {
+    dispatch(changeProductQuantity({ itemID, quantity: newQuantity }));
   }
 
   useEffect(() => {
@@ -29,8 +60,15 @@ export default function CartItem({ index }) {
   }, [products]);
 
   useEffect(() => {
-    // console.log(cart.line_items[index]);
+    if (quantity && currentCartItem && quantity === currentCartItem.quantity) return;
+    if (quantity && currentCartItem) {
+      callbackQueue.addCallback(() => dispatchQttyChange(currentCartItem.id, quantity));
+    }
+  }, [quantity]);
+
+  useEffect(() => {
     setCurrentCartItem(cart.line_items[index]);
+    setQuantity(cart.line_items[index].quantity);
   }, [cart]);
 
   return (currentCartItem && cart && products) && (
@@ -52,7 +90,7 @@ export default function CartItem({ index }) {
         <div className={styles.ctrlWrap}>
           <div className={styles.ctrl}>
             <IconButton onClick={decrementQty} sx={{ width: '16px', height: '16px '}} variant='text'><RemoveIcon/></IconButton>
-            <p>{currentCartItem.quantity}</p>
+            <p>{quantity}</p>
             <IconButton onClick={incrementQty} sx={{ width: '16px', height: '16px '}} variant='text'><AddIcon/></IconButton>
           </div>
           <p className={styles.available}>{`available: ${numberOfUnitsAvailable}`}</p>
